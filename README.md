@@ -13,15 +13,21 @@ This is a lightweight command-line chatbot powered by the **TinyLlama-1.1B-Chat-
 ## 📦 Requirements
 
 - Python 3.8+
-- PyTorch
 - Hugging Face Transformers
 
 
-## 🛠 Installation
+## 🛠 Installation Instructions
 
 1. **Clone the repository**
-   
-   git clone https://github.com/bharathraahul/AI-Chatbot.git into your own folder
+   ```bash
+   git clone https://github.com/bharathraahul/AI-Chatbot.git 
+   cd AI-Chatbot
+```
+### 2. Install Required Libraries
+Make sure to install the necessary Python libraries:
+```bash
+pip install transformers
+```
 
 
   
