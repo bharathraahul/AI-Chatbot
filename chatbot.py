@@ -2,13 +2,12 @@
 import torch
 from transformers import AutoTokenizer, pipeline
 import keyboard
-
-model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+from datetime import datetime
+model_id = "microsoft/Phi-3-mini-4k-instruct"
 
 generator = pipeline(task="text-generation",torch_dtype=torch.bfloat16,model=model_id,device_map="auto")
 
 tokenizer = AutoTokenizer.from_pretrained(model_id)
-
 
 user_history =[]
 
@@ -16,7 +15,7 @@ def response_generator(user_input):
     chats = [
     {
         "role": "system",
-        "content": "You are a friendly chatbot",
+        "content": "You are a helpful AI assistant",
     }
     ]
     
@@ -28,7 +27,7 @@ def response_generator(user_input):
     chats.append({"role":"user","content":user_input})
     
     prompt = tokenizer.apply_chat_template(chats, tokenize=False, add_generation_prompt=True)
-    response = generator(prompt,max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+    response = generator(prompt,max_new_tokens=128, do_sample=True, temperature=0.7, top_k=30, top_p=0.9)
     output = response[0]["generated_text"]
 
     # new_text = output[len(user_input):].strip()
@@ -43,10 +42,14 @@ def response_generator(user_input):
         
 def user_message(user_input):
     if user_input:
+        start = datetime.now()
+    
         output_text = response_generator(user_input)
+        end = datetime.now()
+        
+        print(f"Response Time: {(end-start).total_seconds():.2f}seconds")
         user_history.append({"user":user_input,"assistant":output_text})
         return output_text
-
 
 while True:
     user_input = input("You:")
@@ -62,6 +65,9 @@ while True:
     if user_input.lower()=="exit":
         print("Exiting")
         break
+    
+    
+    
     
         
     
