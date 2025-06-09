@@ -1,6 +1,6 @@
 
 import torch
-from transformers import AutoTokenizer, pipeline
+from transformers import AutoTokenizer, pipeline, AutoModelforCausalLM
 import keyboard
 from datetime import datetime
 model_id = "microsoft/Phi-3-mini-4k-instruct"
