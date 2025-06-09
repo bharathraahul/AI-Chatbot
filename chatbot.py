@@ -5,7 +5,10 @@ import keyboard
 from datetime import datetime
 model_id = "microsoft/Phi-3-mini-4k-instruct"
 
-generator = pipeline(task="text-generation",torch_dtype=torch.bfloat16,model=model_id,device_map="auto")
+model = AutoModelforCausalLM.from_pretrained(model_id,torch_dtype=torch.bfloat16,device_map = "auto")
+
+generator = pipeline(task="text-generation",model=model,device_map="auto")
+
 
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
